@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TrainConsistApp {
+public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
