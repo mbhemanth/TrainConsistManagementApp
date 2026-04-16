@@ -1,37 +1,49 @@
-public class TrainConsistManagementApp {
+import java.util.*;
+import java.util.stream.*;
+
+public class TrainConsistApp {
+
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+    }
+
     public static void main(String[] args) {
 
-        System.out.println("==========================================");
-        System.out.println(" UC20 - Prevent Search on Empty Train ");
-        System.out.println("==========================================\n");
+        System.out.println("=================================");
+        System.out.println("UC9 - Group Bogies by Type");
+        System.out.println("=================================\n");
 
-        String[] bogieIds = {};
+        List<Bogie> bogies = new ArrayList<>();
 
-        String searchId = "BG309";
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("Sleeper", 70));
+        bogies.add(new Bogie("AC Chair", 60));
 
-        if (bogieIds.length == 0) {
-            throw new IllegalStateException("No bogies available in the train. Cannot perform search.");
+        System.out.println("All Bogies:");
+        for (Bogie b : bogies) {
+            System.out.println(b.name + " -> " + b.capacity);
         }
 
-        System.out.println("Available Bogie IDs:");
-        for (String id : bogieIds) {
-            System.out.print(id + " ");
-        }
+        Map<String, List<Bogie>> grouped = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        boolean found = false;
+        System.out.println("\nGrouped Bogies:");
 
-        for (String id : bogieIds) {
-            if (id.equals(searchId)) {
-                found = true;
-                break;
+        for (Map.Entry<String, List<Bogie>> entry : grouped.entrySet()) {
+            System.out.println("\nBogie Type: " + entry.getKey());
+            for (Bogie b : entry.getValue()) {
+                System.out.println("Capacity -> " + b.capacity);
             }
         }
 
-        System.out.println("\n\nSearch Result:");
-        if (found) {
-            System.out.println("Bogie ID " + searchId + " found");
-        } else {
-            System.out.println("Bogie ID " + searchId + " not found");
-        }
+        System.out.println("\nUC9 grouping completed...");
     }
 }
